@@ -5,14 +5,10 @@
   "repository": "https://github.com/pcorderoe/api-architecture-nodejs.git",
   "author": "Patricio Cordero <patricio@espejozen.cl>",
   "license": "MIT",
-  "sideEffects": [
-    "**/*.css",
-    "**/*.scss"
-  ],
   "description": "",
   "scripts": {
     "start": "NODE_ENV=development webpack",
-    "run:dev": "NODE_ENV=development nodemon build/main.js",
+    "run:dev": "NODE_ENV=development nodemon build/main.js --inspect=0.0.0.0:9229",
     "deploy": "NODE_ENV=production webpack",
     "test": "npx jest"
   },

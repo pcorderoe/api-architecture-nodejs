@@ -60,15 +60,33 @@ var swaggerDocument = {
 /* harmony export */ });
 /* harmony import */ var express__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! express */ "express");
 /* harmony import */ var express__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(express__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _shared_auth_auth__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../shared/auth/auth */ "./src/shared/auth/auth.ts");
-/* harmony import */ var _services__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../services */ "./src/services/users.service.ts");
+/* harmony import */ var _services__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../services */ "./src/services/index.ts");
+/* harmony import */ var _shared_auth_auth__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../shared/auth/auth */ "./src/shared/auth/auth.ts");
 
 
 
 var router = (0,express__WEBPACK_IMPORTED_MODULE_0__.Router)();
-var auth = new _shared_auth_auth__WEBPACK_IMPORTED_MODULE_1__.Auth();
-router.get('/', function (req, res) { res.redirect('/docs'); });
-router.get('/users', auth.handleAuth.bind(undefined, 'private'), _services__WEBPACK_IMPORTED_MODULE_2__.index);
+var auth = new _shared_auth_auth__WEBPACK_IMPORTED_MODULE_2__.Auth();
+router.get("/", function (req, res) {
+    res.redirect("/docs");
+});
+var namespace = '/users';
+router.get("" + namespace, auth.handleAuth, _services__WEBPACK_IMPORTED_MODULE_1__.usersService.index);
+router.get(namespace + "/:id", auth.handleAuth, _services__WEBPACK_IMPORTED_MODULE_1__.usersService.getById);
+router.put(namespace + "/:id", auth.handleAuth, _services__WEBPACK_IMPORTED_MODULE_1__.usersService.update);
+router.delete(namespace + "/:id", auth.handleAuth, _services__WEBPACK_IMPORTED_MODULE_1__.usersService.remove);
+router.post("" + namespace, auth.handleAuth, _services__WEBPACK_IMPORTED_MODULE_1__.usersService.create);
+router.post(namespace + "/register", _services__WEBPACK_IMPORTED_MODULE_1__.usersService.register);
+router.post(namespace + "/token", _services__WEBPACK_IMPORTED_MODULE_1__.usersService.token);
+namespace = '/booking';
+/*router.get(`${namespace}`, auth.handleAuth, usersService.index)
+router.get(`${namespace}/:id`, auth.handleAuth, usersService.getById)
+router.put(`${namespace}/:id`, auth.handleAuth, usersService.update)
+router.delete(`${namespace}/:id`, auth.handleAuth, usersService.delete)
+router.post(`${namespace}`, auth.handleAuth, usersService.create)
+router.post(`${namespace}/register`, usersService.register)
+router.post(`${namespace}/token`, usersService.token)
+*/
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (router);
 
 
@@ -106,12 +124,32 @@ var api = _api_routes__WEBPACK_IMPORTED_MODULE_1__.default;
 /* unused harmony export router */
 /* harmony import */ var express__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! express */ "express");
 /* harmony import */ var express__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(express__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _services__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../services */ "./src/services/public.service.ts");
+/* harmony import */ var _services__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../services */ "./src/services/index.ts");
 
 
 var router = (0,express__WEBPACK_IMPORTED_MODULE_0__.Router)();
-router.get('/', _services__WEBPACK_IMPORTED_MODULE_1__.index);
+router.get('/', _services__WEBPACK_IMPORTED_MODULE_1__.pubService.index);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (router);
+
+
+/***/ }),
+
+/***/ "./src/services/index.ts":
+/*!*******************************!*\
+  !*** ./src/services/index.ts ***!
+  \*******************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "pubService": () => (/* reexport module object */ _public_service__WEBPACK_IMPORTED_MODULE_0__),
+/* harmony export */   "usersService": () => (/* reexport module object */ _users_service__WEBPACK_IMPORTED_MODULE_1__)
+/* harmony export */ });
+/* harmony import */ var _public_service__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./public.service */ "./src/services/public.service.ts");
+/* harmony import */ var _users_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./users.service */ "./src/services/users.service.ts");
+
+
+
+
 
 
 /***/ }),
@@ -139,10 +177,34 @@ var index = function (req, res) {
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "index": () => (/* binding */ index)
+/* harmony export */   "index": () => (/* binding */ index),
+/* harmony export */   "getById": () => (/* binding */ getById),
+/* harmony export */   "update": () => (/* binding */ update),
+/* harmony export */   "remove": () => (/* binding */ remove),
+/* harmony export */   "create": () => (/* binding */ create),
+/* harmony export */   "register": () => (/* binding */ register),
+/* harmony export */   "token": () => (/* binding */ token)
 /* harmony export */ });
 var index = function (req, res) {
     res.status(200).json({ message: 'users' });
+};
+var getById = function (req, res) {
+    res.status(200).json({ message: 'user:getById' });
+};
+var update = function (req, res) {
+    res.status(200).json({ message: 'user:update' });
+};
+var remove = function (req, res) {
+    res.status(200).json({ message: 'user:remove' });
+};
+var create = function (req, res) {
+    res.status(200).json({ message: 'user:create' });
+};
+var register = function (req, res) {
+    res.status(200).json({ message: 'user:register' });
+};
+var token = function (req, res) {
+    res.status(200).json({ message: 'user:token' });
 };
 
 
@@ -347,13 +409,13 @@ var __webpack_exports__ = {};
 /* harmony import */ var express__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(express__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var cors__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! cors */ "cors");
 /* harmony import */ var cors__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(cors__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _configs_cors__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./configs/cors */ "./src/configs/cors.ts");
-/* harmony import */ var body_parser__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! body-parser */ "body-parser");
-/* harmony import */ var body_parser__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(body_parser__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var morgan__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! morgan */ "morgan");
-/* harmony import */ var morgan__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(morgan__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var swagger_ui_express__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! swagger-ui-express */ "swagger-ui-express");
-/* harmony import */ var swagger_ui_express__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(swagger_ui_express__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _configs_cors__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./configs/cors */ "./src/configs/cors.ts");
+/* harmony import */ var body_parser__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! body-parser */ "body-parser");
+/* harmony import */ var body_parser__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(body_parser__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var morgan__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! morgan */ "morgan");
+/* harmony import */ var morgan__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(morgan__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var swagger_ui_express__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! swagger-ui-express */ "swagger-ui-express");
+/* harmony import */ var swagger_ui_express__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(swagger_ui_express__WEBPACK_IMPORTED_MODULE_5__);
 /* harmony import */ var _configs_swagger__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./configs/swagger */ "./src/configs/swagger.ts");
 /* harmony import */ var _routes_index__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./routes/index */ "./src/routes/index.ts");
 
@@ -366,11 +428,11 @@ var __webpack_exports__ = {};
 
 var app = express__WEBPACK_IMPORTED_MODULE_0__();
 var NODE_ENV = "development";
-app.use(morgan__WEBPACK_IMPORTED_MODULE_3__(NODE_ENV == 'development' ? 'dev' : 'tiny'));
-app.use(cors__WEBPACK_IMPORTED_MODULE_1___default()(_configs_cors__WEBPACK_IMPORTED_MODULE_5__));
-app.use((0,body_parser__WEBPACK_IMPORTED_MODULE_2__.json)());
-app.use((0,body_parser__WEBPACK_IMPORTED_MODULE_2__.urlencoded)({ extended: true }));
-app.use('/docs', swagger_ui_express__WEBPACK_IMPORTED_MODULE_4__.serve, swagger_ui_express__WEBPACK_IMPORTED_MODULE_4__.setup(_configs_swagger__WEBPACK_IMPORTED_MODULE_6__.swaggerDocument));
+app.use(morgan__WEBPACK_IMPORTED_MODULE_4__(NODE_ENV == 'development' ? 'dev' : 'tiny'));
+app.use(cors__WEBPACK_IMPORTED_MODULE_1___default()(_configs_cors__WEBPACK_IMPORTED_MODULE_2__));
+app.use((0,body_parser__WEBPACK_IMPORTED_MODULE_3__.json)());
+app.use((0,body_parser__WEBPACK_IMPORTED_MODULE_3__.urlencoded)({ extended: true }));
+app.use('/docs', swagger_ui_express__WEBPACK_IMPORTED_MODULE_5__.serve, swagger_ui_express__WEBPACK_IMPORTED_MODULE_5__.setup(_configs_swagger__WEBPACK_IMPORTED_MODULE_6__.swaggerDocument));
 app.use('/', _routes_index__WEBPACK_IMPORTED_MODULE_7__.pub);
 app.use('/api', _routes_index__WEBPACK_IMPORTED_MODULE_7__.api);
 var _a = process.env.PORT, PORT = _a === void 0 ? 3000 : _a;
