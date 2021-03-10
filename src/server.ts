@@ -8,7 +8,7 @@ import * as SwaggerUi from 'swagger-ui-express'
 import { swaggerDocument } from './configs/swagger'
 
 import { pub, api } from './routes/index'
-
+import { handleApiResponse } from './shared/helpers/api.response'
 
 
 const app = express()
@@ -26,6 +26,7 @@ app.use('/docs', SwaggerUi.serve, SwaggerUi.setup(swaggerDocument))
 app.use('/', pub)
 app.use('/api', api)
 
+//app.use('*', handleApiResponse)
 
 const { PORT = 3000 } = process.env
 

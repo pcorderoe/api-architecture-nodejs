@@ -1,7 +1,17 @@
-import { Request, Response } from 'express'
+import { NextFunction, Request, Response } from 'express'
+import { PrismaClient } from '@prisma/client'
+import { toJsonArr } from '../shared/helpers/util'
+const prisma = new PrismaClient()
 
-export const index = (req:Request, res:Response):void => {
-    res.status(200).json({message:'users'})
+
+
+export const index = async (req:Request, res:Response, next:NextFunction):Promise<void> => {
+    try{
+        const users = await prisma.user.findMany({take:50})
+        res.status(200).json({error:null, data:toJsonArr(users)})
+    }catch(error){
+        next(error)
+    }
 }
 
 export const getById = (req:Request, res:Response): void => {
