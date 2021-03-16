@@ -8,12 +8,11 @@ import * as SwaggerUi from 'swagger-ui-express'
 import { swaggerDocument } from './configs/swagger'
 
 import { pub, api } from './routes/index'
-import { handleApiResponse } from './shared/helpers/api.response'
 
 
 const app = express()
 
-const { NODE_ENV } = process.env
+const { NODE_ENV, PORT = 3000 } = process.env
 
 
 app.use(morgan(NODE_ENV == 'development' ? 'dev' : 'tiny'))
@@ -28,8 +27,7 @@ app.use('/api', api)
 
 //app.use('*', handleApiResponse)
 
-const { PORT = 3000 } = process.env
 
 app.listen(PORT, () => {
-    console.log(`Server started at http://localhost:${PORT}`)
+    console.info(`Server started at http://localhost:${PORT}`)
 })

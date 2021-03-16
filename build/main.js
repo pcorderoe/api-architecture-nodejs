@@ -558,7 +558,7 @@ var __webpack_exports__ = {};
 
 
 var app = express__WEBPACK_IMPORTED_MODULE_0__();
-var NODE_ENV = "development";
+var _a = process.env, NODE_ENV = "development", _b = _a.PORT, PORT = _b === void 0 ? 3000 : _b;
 app.use(morgan__WEBPACK_IMPORTED_MODULE_4__(NODE_ENV == 'development' ? 'dev' : 'tiny'));
 app.use(cors__WEBPACK_IMPORTED_MODULE_1___default()(_configs_cors__WEBPACK_IMPORTED_MODULE_2__));
 app.use((0,body_parser__WEBPACK_IMPORTED_MODULE_3__.json)());
@@ -567,9 +567,8 @@ app.use('/docs', swagger_ui_express__WEBPACK_IMPORTED_MODULE_5__.serve, swagger_
 app.use('/', _routes_index__WEBPACK_IMPORTED_MODULE_7__.pub);
 app.use('/api', _routes_index__WEBPACK_IMPORTED_MODULE_7__.api);
 //app.use('*', handleApiResponse)
-var _a = process.env.PORT, PORT = _a === void 0 ? 3000 : _a;
 app.listen(PORT, function () {
-    console.log("Server started at http://localhost:" + PORT);
+    console.info("Server started at http://localhost:" + PORT);
 });
 
 })();
